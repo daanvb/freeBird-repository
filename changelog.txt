@@ -1,3 +1,8 @@
+1.8.250
+- Verify resized artwork before showing frosted sidebar and Settings surfaces.
+- Shorten Home and Sports sidebars into inset floating overlays.
+- Player 0.1.53 replaces the Chapters grid with a sharp open-book icon.
+
 1.8.249
 - Restore compact SF quality badges on Home and media heroes with new asset paths.
 - Preserve playback-info layout and Player 0.1.52.
