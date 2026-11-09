@@ -1,3 +1,8 @@
+1.8.252
+- Match all Home and Sports sidebar layers to clearly rounded 40px corners.
+- Default autoplay to three total episodes (current plus two), preserving saved choices.
+- Player 0.1.53 and Repository 1.0.6 remain unchanged.
+
 1.8.251
 - Choose 1, 2, 3, 4, 5 or 10 episodes per autoplay session, including the current episode.
 - Preserve the default of four total episodes and prepare next-episode sources before Up Next.
