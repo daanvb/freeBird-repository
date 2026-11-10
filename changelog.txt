@@ -1,3 +1,9 @@
+1.8.253
+- Expand free-source trivia to 882 facts across 365 films and TV shows, with at least two facts per title.
+- Mix bundled facts with Wikipedia while retaining attribution and filtering duplicates and spoilers.
+- Load the larger catalogue in the background without making playback wait.
+- Preserve the published sidebar and autoplay behavior; Player remains 0.1.53.
+
 1.8.252
 - Match all Home and Sports sidebar layers to clearly rounded 40px corners.
 - Default autoplay to three total episodes (current plus two), preserving saved choices.
