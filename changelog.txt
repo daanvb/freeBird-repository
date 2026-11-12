@@ -1,3 +1,9 @@
+1.8.256
+- Add optional device-local bitrate limits: Off, Manual and Automatic connection.
+- Apply limits to source selection, autoplay, retries, Up Next and final playback dispatch.
+- Keep the cap for unknown connections; unknown source bitrates require opt-in.
+- Preserve existing behaviour by default; Player remains 0.1.54.
+
 1.8.255
 - Improve small icon sampling with size-matched artwork and Player 0.1.54.
 - Keep addon settings and provider choices aligned with enabled capabilities.
