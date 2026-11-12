@@ -87,6 +87,22 @@ Choose **Off — choose manually**, **Highlight best match**, or **Auto play bes
 
 **Play/Resume** appears for autoplay; **Choose source** appears for manual selection. **More → Choose source manually** is available while autoplay is enabled.
 
+### Device bitrate limit
+
+In **Settings → Sources → Bitrate limit**, choose **Off** (default), **Manual**, or **Automatic measured speed**. Manual always uses the device's selected **Manual / fallback bitrate** (5–200 Mbps, initially 25). Automatic downloads a bounded sample and uses **70% of measured download throughput** as its cap on Wi-Fi, Ethernet and unknown connection types. For example, 80 Mbps measured gives a 56 Mbps cap. A successful measurement replaces the fallback, so a faster network can raise the cap above 25 Mbps. Existing saved Off/Manual/Automatic indices and manual cap values are preserved.
+
+**Measured speed / applied cap** is a read-only status, refreshed while Sources settings is open. **Measure speed now** forces a fresh background test in automatic mode. Tests use the public [Cloudflare download endpoint](https://github.com/cloudflare/speedtest), discard received data, and download at most **10 MB per test**. The transfer has an eight-second read budget and 1.5-second socket timeouts; initial source selection waits at most twelve seconds without blocking the UI. A stalled DNS operation may take longer to exit, but its result is abandoned and another worker is not created alongside it. No account details, stream URLs or credentials are sent. The endpoint sees the normal network request/IP address.
+
+A conservative estimate includes connection startup and stalls and uses the lower of the overall rate and the lower quartile of one-second transfer windows. The 30% headroom allows for fluctuations; this measures the path to Cloudflare, not a provider-specific guarantee. Short downloads can underestimate fast connections. No suitable result means the configured fallback applies, never an unlimited Ethernet exemption. Failed tests back off for a minute. The status identifies service rejection, connection/DNS, certificate or timeout failures where possible; the fallback stays active until a valid measurement succeeds.
+
+Results are kept in this app process for five minutes, with no speed-test files, network identifiers or test history persisted. Kodi network-address/gateway/subnet hints and accessible connection-type evidence invalidate results on detectable changes. Android does not need to expose Wi-Fi APIs or `/proc/net` for measurement. Two networks with the same visible hints cannot always be distinguished: use **Measure speed now** after switching, or wait for expiry and another settings/source check. No timer downloads data indefinitely outside settings/source activity.
+
+Tests are deferred/cancelled while Kodi is playing audio, video or a trailer and on shutdown or leaving automatic mode. They do not stop playback. A valid cached result can still be used during playback; an expired/unavailable result uses the fallback. The next source selection can measure again when idle. Cached source lists finish through the normal UI update path after the initial check; Back/close invalidates delayed updates. Fastest-start autoplay waits for pending measurement rather than racing it.
+
+The cap applies before ranking/grouping to movie, episode and sports sources, autoplay, retries, cached Up Next and final dispatch. Unknown reported bitrates are hidden under an active cap unless **Allow unknown bitrates** is enabled. Existing resolution, identity and blacklist safeguards remain. Manual settings are excluded from copying device setup. Neither mode transcodes or switches the file already playing. Bitrate peaks, inaccurate reports and slow providers can still cause buffering.
+
+Manual and automatic measurement share portable Python/Kodi code on Fire TV Stick, NVIDIA Shield and CoreELEC. Offline tests and a successful development-host measurement do not certify native device behaviour. Native validation remains outstanding for each device on Wi-Fi/Ethernet, faster/slower networks (including identical local-address networks), cancelled tests, playback deferral and unavailable test service.
+
 ### Video formats and FEL
 
 The picker’s **Video** filter includes Dolby Vision, HDR and reported **Profile 7/FEL** options. **Show FEL source hints** controls the extra labels; disabling it does not remove the filters.

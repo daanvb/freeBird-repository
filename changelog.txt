@@ -1,3 +1,8 @@
+1.8.259
+- Fix automatic speed tests rejected by the download service.
+- Explain service, connection, certificate and timeout failures while keeping the fallback limit active.
+- Use a bounded 10 MB sample on all devices; Player remains 0.1.54.
+
 1.8.258
 - Set Automatic bitrate limits to 70% of measured download throughput.
 - Add Measure speed now and live measurement status; retain manual fallback limits.
