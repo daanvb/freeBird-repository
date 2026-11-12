@@ -1,3 +1,9 @@
+1.8.258
+- Set Automatic bitrate limits to 70% of measured download throughput.
+- Add Measure speed now and live measurement status; retain manual fallback limits.
+- Bound background tests, defer during playback and preserve cancellation.
+- Off remains the default; Player remains 0.1.54.
+
 1.8.257
 - Show UN badges and Usenet service details for explicitly reported Usenet services.
 - Preserve service identity through source collection and caching; keep RD/TB precedence.
