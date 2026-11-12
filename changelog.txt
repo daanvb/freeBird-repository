@@ -1,3 +1,10 @@
+1.8.255
+- Improve small icon sampling with size-matched artwork and Player 0.1.54.
+- Keep addon settings and provider choices aligned with enabled capabilities.
+- Close chapter-stop prompts without blocking input or cancelling the selected boundary.
+- Remove the loading trivia source-details hint.
+- Preserve the newer published sidebar corner fix; reconcile previously integrated PRs.
+
 1.8.254
 - Add Watch until chapter to playback settings, with available chapter names and estimated local finish times.
 - Show a 30-second warning: Continue cancels the stop, Defer moves it to the next chapter, and End stops at the selected chapter end.
