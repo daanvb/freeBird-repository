@@ -1,3 +1,8 @@
+1.8.261
+- Add detailed source-search timings for processing, screen updates and speed-test waits.
+- Include numeric-only measurements in the source-search report; preserve all sources and playback behaviour.
+- Player remains 0.1.54.
+
 1.8.260
 - Keep playback intact when subtitle downloads fail; allow retry after reconnection.
 - Show UN badges in source lists and improve the Close button contrast.
