@@ -1,3 +1,8 @@
+1.8.260
+- Keep playback intact when subtitle downloads fail; allow retry after reconnection.
+- Show UN badges in source lists and improve the Close button contrast.
+- Reuse unchanged source display data and avoid duplicate final updates.
+
 1.8.259
 - Fix automatic speed tests rejected by the download service.
 - Explain service, connection, certificate and timeout failures while keeping the fallback limit active.
