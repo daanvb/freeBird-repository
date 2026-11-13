@@ -1,3 +1,8 @@
+1.8.263
+- Start live searches without waiting for expired saved lists to render.
+- Prepare new source items offscreen and retain all sources, remuxes and playback choices.
+- Add detailed startup and list-update timings; Player remains 0.1.54.
+
 1.8.262
 - Reuse unchanged source list items and skip redundant redraws.
 - Append new results without rebuilding an unchanged list prefix; preserve all sources, remuxes and playback choices.
