@@ -1,3 +1,8 @@
+1.8.262
+- Reuse unchanged source list items and skip redundant redraws.
+- Append new results without rebuilding an unchanged list prefix; preserve all sources, remuxes and playback choices.
+- Keep source-search diagnostics available; Player remains 0.1.54.
+
 1.8.261
 - Add detailed source-search timings for processing, screen updates and speed-test waits.
 - Include numeric-only measurements in the source-search report; preserve all sources and playback behaviour.
