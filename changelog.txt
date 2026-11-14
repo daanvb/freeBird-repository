@@ -1,3 +1,8 @@
+1.8.268
+- Add matching rounded cards, compact popups and coloured avatar previews.
+- Avoid false episode-progress conflicts after metadata-only updates.
+- Reject malformed post-upload sync verification while preserving local progress.
+
 1.8.267
 - Recover missing posters and share provider metadata between artwork and title details.
 - Add optional measured-speed poster previews; full quality remains the default.
