@@ -1,3 +1,24 @@
+1.8.267
+- Recover missing posters and share provider metadata between artwork and title details.
+- Add optional measured-speed poster previews; full quality remains the default.
+- Preserve focus and deliberate presses while loading, with immediate menu transitions.
+- Match Settings panel corners to the rounded sidebar.
+
+1.8.266
+- Reduce unnecessary native source-item property writes while preserving labels, badges, release details and live logos.
+- Separate item construction, property-setting and optional CPU/wait timings in source-search reports.
+- Preserve all sources and remux results; Player remains 0.1.54.
+
+1.8.265
+- Reuse source metadata preparation and skip obsolete partial-list renders.
+- Prioritise source updates over hidden title-page refreshes during searches.
+- Preserve all sources, remuxes and provider choices; Player remains 0.1.54.
+
+1.8.264
+- Reuse validated saved-source results without reading the cache twice.
+- Reduce repeated description and label processing; retain every source, remux and provider choice.
+- Keep source-search diagnostics available; Player remains 0.1.54.
+
 1.8.263
 - Start live searches without waiting for expired saved lists to render.
 - Prepare new source items offscreen and retain all sources, remuxes and playback choices.
