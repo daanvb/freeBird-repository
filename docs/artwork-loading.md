@@ -6,6 +6,16 @@ Keys include the exact provider URL, artwork generation/revision, profile cache 
 
 The shared format uses a new cache namespace, so older raw metadata responses are fetched once before becoming reusable. Existing valid derived posters remain available. This caches JSON and image URLs, not downloaded image bytes; Kodi still owns the image cache.
 
+## Home handoff and refresh recovery (1.8.270)
+
+A generated Home rebuild first retains newer resolved artwork, then prepares cached catalogue rows. The second step previously overwrote that retained artwork with an older disk response. The regression now exercises both steps together; older same-signature responses and fallback-only results cannot displace an already resolved preferred poster. Newer results and explicit provider/artwork revision changes still apply.
+
+Successful title metadata now publishes artwork to Home before optional hero formats, ratings and credits, and again when returning from details. Only the configured artwork provider and the request's original artwork signature qualify. Capture that signature before the request so a concurrent refresh cannot relabel an old response as current. This handoff updates native artwork without changing progress/focus, performing another provider request or extending disk-cache expiry.
+
+The handoff rebinds the native image using an option-free `image://` wrapper. Kodi uses a distinct control/texture-manager identity while unwrapping the same original URL for its persistent cache and download. No query parameters or signed upstream URLs are changed. See [Kodi texture cache](https://github.com/xbmc/xbmc/blob/21.2-Omega/xbmc/TextureCache.cpp) and [image URL unwrapping](https://github.com/xbmc/xbmc/blob/21.2-Omega/xbmc/TextureDatabase.cpp).
+
+The wired Ugoos report includes 45–90 second artwork waits and posters disappearing during “Updating Home”. The stale refresh replacement is reproduced offline; the hardware's complete latency cause is not established. In particular, Kodi already routes remote URLs through its background loader even without a `background` XML attribute, so adding that attribute alone is not evidence of a network latency fix ([GUITexture](https://github.com/xbmc/xbmc/blob/21.2-Omega/xbmc/guilib/GUITexture.cpp), [TextureManager](https://github.com/xbmc/xbmc/blob/21.2-Omega/xbmc/guilib/TextureManager.cpp)).
+
 ## Placeholder recovery (1.8.269)
 
 Generated cinematic Home/Discover cards must carry `background="true"` and the dynamic `poster_fallback` texture attribute. The source template alone is insufficient because card generation replaces those controls. Tests now inspect the final generated layout, including focused cards and the Discover grid. Kodi resolves dynamic fallbacks when texture allocation fails ([GUIImage.cpp](https://github.com/xbmc/xbmc/blob/21.2-Omega/xbmc/guilib/GUIImage.cpp)); this does not detect or cancel a still-running image request.
@@ -31,3 +41,41 @@ References: [TMDB image URLs](https://developer.themoviedb.org/docs/image-basics
 ## Device validation still needed
 
 The affected Fire TV Stick is on Wi-Fi and is not remotely accessible. Offline request-count tests do not establish native image-cache reuse or a startup speedup. After an authorised installation, compare the same Home row on first visit, return navigation and Kodi relaunch without clearing caches. Distinguish metadata completion from image availability and record elapsed times and counts only. Cache inspection must remain read-only and must not export configured image URLs, account data or raw logs. Repeated slow rendering can also involve failed image requests or changing URLs; do not assume it proves cache eviction.
+
+
+## Progressive metadata delivery (1.8.270)
+
+Title details and Home heroes publish usable provider metadata before optional
+supplements finish. Partial delivery paints presentation only; episode lists and
+playback actions wait for the final shared merge/reconciliation. IMDb episode
+reference requests overlap the primary provider, and configured supplements do
+not wait for a fallback manifest. Provider role precedence and shared response
+cache TTL/invalidation rules are unchanged.
+
+A 20-second caller budget covers identity resolution, provider metadata,
+fallback discovery and episode-reference waiting. Individual metadata requests
+use at most the remaining budget (capped at 15 seconds). A bounded daemon pool
+prevents executor teardown from making the caller wait for a stuck transport;
+Python cannot forcibly terminate an already-running socket/DNS call. Cancellation
+suppresses late presentation, cancels queued work and leaves transport/cache
+invalidation rules intact. Optional format/ratings/credits enrichment and Kodi
+image downloads are outside this metadata budget. Budget-exhausted hero results
+are displayed but not retained as complete hero-cache entries.
+
+Home schedules poster metadata for the settled selection and at most 19 nearby
+cards. Navigation reschedules this window; off-screen pending titles are dropped
+before admission. Already-started requests retain their existing timeout and
+shared-response coalescing. Existing full-quality and Automatic settings remain
+unchanged.
+
+Local performance stages distinguish `metadata.first` from `metadata.complete`.
+The active browse pump samples up to four nearby bound image URLs, with at most
+two exact texture-cache checks per second on a separate bounded worker. Samples
+record cache-ready, inspection-unknown or still-pending after 120 seconds, plus
+probe counts and first-check hits. Option-free retry wrappers use the original
+cache identity; resized image wrappers retain their transformed identity.
+No image URLs, titles or credentials enter these timing records. Reporting uses
+the existing explicit performance-report flow. Cache availability is not proof
+of GPU rendering; elapsed time begins when a bound card is first observed, not
+when its remote download necessarily began. Fire Stick/Ugoos cache reuse and
+visible latency still require an authorised real-device comparison.
