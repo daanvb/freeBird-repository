@@ -6,7 +6,13 @@ Keys include the exact provider URL, artwork generation/revision, profile cache 
 
 The shared format uses a new cache namespace, so older raw metadata responses are fetched once before becoming reusable. Existing valid derived posters remain available. This caches JSON and image URLs, not downloaded image bytes; Kodi still owns the image cache.
 
-## Automatic poster previews (unreleased)
+## Placeholder recovery (1.8.269)
+
+Generated cinematic Home/Discover cards must carry `background="true"` and the dynamic `poster_fallback` texture attribute. The source template alone is insufficient because card generation replaces those controls. Tests now inspect the final generated layout, including focused cards and the Discover grid. Kodi resolves dynamic fallbacks when texture allocation fails ([GUIImage.cpp](https://github.com/xbmc/xbmc/blob/21.2-Omega/xbmc/guilib/GUIImage.cpp)); this does not detect or cancel a still-running image request.
+
+While preferred metadata is pending, a valid non-legacy catalogue poster can display immediately as a temporary fallback. Provider ownership remains pending and the preferred result still replaces it. Rows carrying an invalidated provider signature retain their neutral placeholder until resolution, preserving explicit refresh rules. No image sizes, signed URLs or cache identities change. This removes metadata waiting from the first-image path when usable catalogue artwork exists; it does not establish a measured Ugoos speedup.
+
+## Automatic poster previews (1.8.267)
 
 Appearance > Poster loading offers **Full quality** (default) and **Automatic measured speed**. The choice stays on this device and is excluded from portable setup. It does not infer screen size from resolution or Wi-Fi. Enabling it on a Fire TV Stick does not lower image quality on another device.
 

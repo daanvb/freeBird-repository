@@ -1,3 +1,8 @@
+1.8.269
+- Harden standby recovery, Home closure and refresh-worker recovery.
+- Prevent late trailer starts during screensaver or after window closure.
+- Restore generated poster fallbacks and show valid catalogue artwork sooner.
+
 1.8.268
 - Add matching rounded cards, compact popups and coloured avatar previews.
 - Avoid false episode-progress conflicts after metadata-only updates.
