@@ -214,3 +214,28 @@ restart after observation gaps longer than five seconds. Older artwork history i
 shown in separate `.legacy` summary groups: long legacy durations may include time
 spent away from the screen, rather than waiting for an image. Native image display
 still requires device validation.
+
+
+## Fresh versus retained timings
+
+Provider rows show the age of the last saved request. A recent `Last: Timed out`
+result is still a saved observation, not a live server health check. Results more
+than 15 minutes old, from before the latest known app session, or with an unknown/
+future timestamp use neutral `Earlier` styling. Details include the absolute UTC
+observation time. Reopen Troubleshooting after browsing to refresh these labels.
+A subsequent request for the same provider/operation replaces its latest result
+as before; unrelated requests do not clear a catalogue failure.
+
+Browsing report version 2 retains bounded `events`, but `summary` now covers only
+the last 15 minutes, excluding observations before the latest known app-session
+start. `historical_summary` preserves older results separately, including earlier
+failures. `captured_at`, `session_started` and `recent_window_seconds` make the
+scope explicit; without a known session start the age window alone applies.
+Request summaries and newly recorded performance timings retain `checked` times.
+Old entries without timestamps are not relabelled as fresh. Startup launch medians
+remain explicitly historical measurements.
+
+This does not clear metadata or Kodi image caches and makes no extra provider
+requests. Reading the screen writes no diagnostic state. The capture timestamp
+alone is excluded from automatic-upload deduplication; actual changed evidence or
+an observation moving out of the recent window can still update the report.

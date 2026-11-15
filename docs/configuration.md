@@ -2,6 +2,31 @@
 
 For installation and the current release, see the [project README](../README.md).
 
+## Artwork storage limit (unreleased)
+
+**Settings → Cache → Maximum freeBird artwork** limits identifiable artwork cached
+by Kodi for freeBird on this device. Choose 128, 256, 512, 1024 or 2048 MB, or
+Unlimited. The default is 512 MB. The setting is excluded from portable setup,
+so a Fire TV Stick can use a smaller limit than a Shield or CoreELEC device.
+
+The service checks after its first minute and every five minutes thereafter,
+outside playback. Changing the setting schedules another check. If usage exceeds
+the limit, it removes least recently used images down to 90% of the limit; Kodi
+downloads them again when needed. Playback, shutdown and a changed limit cancel
+remaining cleanup. Usage can exceed the limit between checks or during playback.
+
+The existing 64 MB response-data limit is separate. Neither limit caps Kodi's
+total installed size: other add-ons, packages, databases and older images whose
+freeBird origin is unknown are excluded. Cached artwork shared with another
+add-on can be downloaded again by that add-on too. Login and watched history are
+untouched. No image-quality reduction is applied.
+
+Implementation measures files below Kodi's thumbnail directory and uses
+[Kodi's texture API](https://github.com/xbmc/xbmc/blob/Omega/xbmc/interfaces/json-rpc/TextureOperations.cpp)
+for removal, preserving database/file consistency. A device-local hash inventory
+retains ownership beyond the short URL ledger; it contains no image URLs and is
+not synced. Native Fire TV, Shield and CoreELEC behavior still requires validation.
+
 ## What Strem4Kodi includes
 
 | Feature | What it does |
@@ -137,6 +162,8 @@ A title without a resolvable trailer will not preview. The configured delay does
 
 Under **Skip & Up Next**, enable IntroDB and the skip-button types you want. No IntroDB API key is required. Buttons appear only during a matching community marker; coverage varies by episode.
 
+Enable **Automatically play next episode** to advance after the current episode ends naturally when the next episode uses an Auto play profile. Source checks and retries use the same Play Next path. Dismissing the card or stopping playback cancels advancement. A continuous autoplay session stops after three automatically started episodes, preventing indefinite playback if a television powers off without stopping Kodi. The option is off by default.
+
 Up Next offers the next regular aired episode, including across season boundaries. Its timing uses the episode’s credits marker first, followed by a series override, reliable learned timing, or **Up Next fallback timing**. **Learn credits timing per series** needs at least three played episodes with usable IntroDB markers; it does not guess credits by analysing video. Set a series-specific override through the episode menu when needed.
 
 To share learned credits and overrides:
@@ -180,7 +207,7 @@ Watch-progress sync uses Stremio’s library state, watched flags and episode st
 - Account credentials, API keys, caches, recent searches and queued progress are stored in Kodi’s Strem4Kodi addon profile on each device.
 - Account/library progress is shared with Stremio. Metadata, streams and subtitles are requested from the services/addons you configure.
 - IntroDB receives episode lookups.
-- Loading trivia uses public Wikimedia APIs in the background. Wikidata receives the exact IMDb identity and English Wikipedia receives the confirmed article title. Requests contain no stream links, account data or viewing progress. Cited production facts are cached, attributed to Wikipedia contributors under CC BY-SA 4.0, and rotate every ten seconds while loading. Bundled title-specific facts provide an offline fallback; unavailable trivia stays hidden. This lookup never holds playback until it finishes.
+- Loading trivia uses public Wikimedia APIs in the background. Wikidata receives the exact IMDb identity and English Wikipedia receives the confirmed article title. Requests contain no stream links, account data or viewing progress. Cited production facts are cached, attributed to Wikipedia contributors under CC BY-SA 4.0, and rotate every ten seconds while loading. Bundled title-specific facts mix with live Wikipedia results; unavailable trivia stays hidden. Curated entries are independently worded, manually reviewed production/award facts from freely accessible sources (including BFI, Television Academy, Pixar, Disney D23 and ILM), with a source link for each entry. No paid IMDb dataset or new live provider is required. The local pool is bounded to 22 curated plus 10 live candidates, removes exact/near lexical duplicates, and preserves the selected source and Wikipedia attribution. Explicit spoiler flags and conservative reveal/ending filters apply to both sources; automated screening cannot guarantee that every subtle spoiler or paraphrased duplicate is detected. This lookup never holds playback until it finishes. The bundled catalogue covers 365 titles with at least two facts each (882 facts total). The larger CC0 Wikidata expansion is loaded once on the existing background worker, before network work; playback only reads its in-memory snapshot. Source selection, evidence and rebuild instructions are in `docs/trivia-catalogue.md`.
 - Smart credits sync is opt-in and uses the private GitHub repository. The public FEL hints catalogue downloads without sending your viewing history.
 - Diagnostics remain local; no remote reporting endpoint is enabled in this project.
 
@@ -195,7 +222,7 @@ python tools/build-stremio-addon.py --output dist
 
 Strem4Kodi develops independently from the original project. Useful upstream fixes can be reviewed on demand with `python tools/review-upstream.py --output dist/upstream-review.md`, then adapted individually. Nothing is merged automatically. See the [upstream review guide](https://github.com/daanvb/freeBird-private/blob/firebird/docs/upstream-review.md).
 
-The addon ID is **`script.freebird`**; repository ID is **`repository.freebird`**. The repository builder requires an explicit HTTPS `--feed-url`. Use a new version for a new published build rather than replacing an existing release ZIP.
+The addon ID is **`script.strem4kodi`**; repository ID is **`repository.strem4kodi`**. The repository builder requires an explicit HTTPS `--feed-url`. Use a new version for a new published build rather than replacing an existing release ZIP.
 
 Based on [Stremio-for-Kodi](https://github.com/0eroiQ/Stremio-for-Kodi), with Nimbus layouts/artwork credited to Ivar Brandt. Original contributor credits, Git history, bundled third-party notices and the **GPL-2.0-or-later** license are retained. [IntroDB](https://introdb.app/), TMDB, IMDb and MDbList supply the respective external metadata; the [community FEL disc catalogue](https://github.com/Appz4Fun/fel-dolby-vision-movies) supplies disc hints.
 

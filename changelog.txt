@@ -1,3 +1,8 @@
+1.8.276
+- Add a per-device freeBird artwork cache budget (512 MB default).
+- Show observation ages and separate recent diagnostics from historical results.
+- Avoid extra diagnostic uploads caused only by capture timestamps.
+
 1.8.275
 - Remove completed series after playback, manual watched actions and background refresh.
 - Correct artwork timing across modal screens and suspend; separate legacy measurements.
