@@ -207,3 +207,10 @@ A cache miss may have no subsequent completion observation if the user moves awa
 Timings can suggest a bottleneck but cannot establish server versus network cause
 without further evidence. These additions neither change artwork quality nor
 change metadata cache lifetimes/invalidation.
+
+
+Artwork observations with `timing_version: 2` use the worker completion time and
+restart after observation gaps longer than five seconds. Older artwork history is
+shown in separate `.legacy` summary groups: long legacy durations may include time
+spent away from the screen, rather than waiting for an image. Native image display
+still requires device validation.

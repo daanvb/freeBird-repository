@@ -79,3 +79,22 @@ the existing explicit performance-report flow. Cache availability is not proof
 of GPU rendering; elapsed time begins when a bound card is first observed, not
 when its remote download necessarily began. Fire Stick/Ugoos cache reuse and
 visible latency still require an authorised real-device comparison.
+
+
+## Interrupted observation and retired input
+
+Artwork timing version 2 ends completed measurements at the worker's sampling
+instant, not the later UI tick that collects the result. A gap of more than five
+seconds between samples starts a new observation and discards obsolete results.
+This covers modal navigation, playback and suspend without creating additional
+workers when an old probe is still running. A first-probe hit still only proves
+cache availability at that probe; it is not a download or rendering measurement.
+Older artwork events remain in reports under `.legacy` summary groups and must
+not be compared as corrected cache durations.
+
+Home and details native input callbacks reject already-closed windows and catch
+only the explicit `WindowRetired` cancellation if retirement races a callback.
+This does not wait on the renderer, reopen a retired window or suppress unrelated
+native errors. Offline tests cover late input and a close occurring during action
+handling. These fixes do not establish the cause of provider catalogue timeouts
+or prove that every blank poster symptom is resolved on hardware.
