@@ -1,3 +1,8 @@
+1.8.271
+- Keep the selected Home title stable after returning from details.
+- Preserve watched history when episode metadata cannot safely match saved history.
+- Reject unsafe manual watched-state updates and retry playback history merging when metadata recovers.
+
 1.8.270
 - Preserve newer Home posters and reuse completed title artwork.
 - Show metadata progressively, bound metadata waiting and prioritize nearby posters.
