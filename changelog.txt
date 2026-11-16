@@ -1,3 +1,8 @@
+1.8.277
+- Remove repeated Settings category descriptions and ordinary choice-popup help.
+- Keep complete short explanations in the main details box; show Details only for additional information.
+- Preserve action confirmation context, saved choices and navigation.
+
 1.8.276
 - Add a per-device freeBird artwork cache budget (512 MB default).
 - Show observation ages and separate recent diagnostics from historical results.
