@@ -1,3 +1,8 @@
+1.8.278
+- Stop Home rows and the drawer footer wrapping back to the beginning.
+- Retain Kodi 21 support while adapting language tags, native seek actions and Live TV DRM for Kodi 22.
+- Fix older Python keymap writes and bodyless HTTP-error handling.
+
 1.8.277
 - Remove repeated Settings category descriptions and ordinary choice-popup help.
 - Keep complete short explanations in the main details box; show Details only for additional information.
