@@ -1,3 +1,9 @@
+1.8.283
+- Request the selected second without ten-second rounding; show the same selected time on the preview and seek bar, with the actual keyframe time when different. Never substitute a future frame.
+- Wait for 300 ms of stable selection before decoding, and stop speculative neighbouring requests. Cached pictures remain immediate.
+- Replace the permanent playback read cap with a rolling 60-second allowance that resumes automatically after cooldown; failed and cancelled reads remain charged.
+- Keep timeout/error messages tied to their target. Player remains 0.1.54 and Android decoders remain 0.1.0; individual 4K requests can still reach the existing five-second/8 MiB limits.
+
 1.8.282
 - Keep a single preview box in a fixed position, with a placeholder while loading. Stop sparse cached pictures jumping between left, centre and right slots.
 - Show cached frames only within one ten-second step of the selected position, with the actual frame timestamp.

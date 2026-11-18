@@ -1,6 +1,6 @@
 # Experimental seek preview images
 
-Update to freeBird **1.8.282** (Player remains **0.1.54**), then enable
+Update to freeBird **1.8.283** (Player remains **0.1.54**), then enable
 **Playback → Seek preview images (experimental)** in freeBird settings.
 It is off by default and stays local to the device. **Press OK to seek** makes
 testing easier: Left/Right selects a position, OK commits it, and Back cancels.
@@ -66,7 +66,7 @@ the integrated 1.8.279 path supersedes its prototype-only descriptions.
 
 When no images are available, the seek bar now shows a fixed status message for
 missing/disabled decoders, loading failure, waiting for playback, frame failure
-or the per-playback read limit. Version 1.8.281 additionally distinguishes
+or a temporary read cooldown. Version 1.8.281 additionally distinguishes
 timeouts, failed stream reads, inconsistent byte ranges, unsupported containers
 and per-picture byte limits. No media address or raw exception is displayed.
 An isolated Linux Kodi 20.5 runtime reproduced `System.HasAddon=true` with
@@ -93,10 +93,11 @@ the current sound selection and volume. Sound assets are not copied into our ZIP
   plan and cancel obsolete reads; cached nearby frames stay immediately available
   in a small dialog memory catalogue. Polling is 50 ms in the worker and 100 ms
   in the existing painter; there is no thumbnail wait on remote callbacks.
-- Ten-second buckets match tap seeks. From 1.8.282, foreground work requests the
-  selected position and one neighbouring step in the direction of travel.
-  Background work only requests the current playback bucket, with at most
-  16 MiB of the 64 MiB session allowance; there is no distant whole-film scan.
+- From 1.8.283, foreground work requests the selected whole second after 300 ms
+  without a target change. It does not round to ten-second buckets or prefetch
+  neighbouring positions. Cached pictures remain immediate. Background work
+  uses ten-second playback buckets with at most 16 MiB across playback;
+  there is no distant whole-film scan.
   One decoder runs at a time with one decode/filter thread. There is no second player.
 - `core/seek_preview.py` seeks FFmpeg directly to a keyframe and produces a maximum
   384×216 JPEG. A loopback adapter permits two overlapping range connections from
@@ -107,8 +108,13 @@ the current sound selection and volume. Sound assets are not copied into our ZIP
   Since 1.8.282, a 32 KiB loopback send buffer limits speculative read-ahead while
   the decoder is parsing a header or seeking. An isolated Linux slow-consumer
   test reduced fetched data from 2.5 MiB to 0.5 MiB. Actual buffering varies by OS;
-  the frame and session ceilings are unchanged and now have distinct messages.
-- Read budgets are 8 MiB/five seconds per picture and 64 MiB per playback session.
+  frame limits and the rate limit have distinct messages.
+- Read budgets are 8 MiB/five seconds per picture. Version 1.8.283 replaces the
+  permanent 64 MiB playback cap with 64 MiB in any rolling 60 seconds. Failed
+  and cancelled reads remain charged. When too little allowance remains for
+  a complete picture, new decoding cools down and resumes automatically as
+  charges expire; cached pictures remain available. Cumulative accounting
+  stays intact, and playback does not need to restart.
   Since 1.8.281, reads use 512 KiB blocks instead of 128 KiB to amortise HTTP
   request latency; the 8 MiB cache and other limits are unchanged. A synthetic
   streamed 4K/10-bit HEVC MKV with 300 ms latency per range request exceeded the
@@ -123,12 +129,15 @@ the current sound selection and volume. Sound assets are not copied into our ZIP
   duration or playback session invalidates mailbox ownership. Signed URL changes
   intentionally miss the disk cache. Off stops work and keeps existing cached files.
 
-The single fixed preview introduced in 1.8.282 uses **≈** timestamps because
-keyframes may precede the selected bucket. Only cached images within ten seconds
-of the selection are displayed; otherwise the same box shows a placeholder and
-the selected time while the worker catches up. A picture never changes slots.
-The main seek label remains the actual requested destination. Cold 4K positions
-may still take seconds to generate or exceed the per-frame limit.
+The single fixed preview introduced in 1.8.282 now labels the same selected
+second as the main seek bar. When the keyframe differs, its actual time follows
+in parentheses, such as **1:49 (frame ≈ 1:48)**. Only keyframes at or before the
+selection and no more than five seconds earlier are displayed. A future or
+distant cached frame cannot stand in for the selection. Otherwise the fixed
+box shows a placeholder. Errors belong to their requested position, so moving
+away from a timed-out target does not carry its error to the next target.
+Cold 4K positions may still take seconds to generate or exceed the unchanged
+five-second/per-frame byte limits; long GOPs can lack a sufficiently close frame.
 No alternate film copy is selected. HLS/DASH, live TV, inputstream/DRM playback,
 network filesystem schemes and servers without valid byte ranges are excluded.
 HDR/Dolby Vision thumbnail colours are not tone-mapped or certified. Large-frame
