@@ -1,6 +1,6 @@
 # Experimental seek preview images
 
-Update to freeBird **1.8.281** (Player remains **0.1.54**), then enable
+Update to freeBird **1.8.282** (Player remains **0.1.54**), then enable
 **Playback → Seek preview images (experimental)** in freeBird settings.
 It is off by default and stays local to the device. **Press OK to seek** makes
 testing easier: Left/Right selects a position, OK commits it, and Back cancels.
@@ -39,8 +39,10 @@ Missing/unsupported decoders leave the normal timeline available. freeBird never
 downloads binaries directly or changes executable permissions. The package layout
 is confirmed by [CoreELEC's FFmpeg Tools build](https://github.com/CoreELEC/CoreELEC/blob/coreelec-21/packages/addons/tools/ffmpeg-tools/package.mk).
 
-Native installation and rendering on Fire TV/Shield, CoreELEC FFmpeg Tools setup,
-4K CPU/RAM, playback smoothness and HDR thumbnail colour still need device tests.
+The user has confirmed installation and some 4K pictures on Fire TV/Kodi 22;
+their 1.8.281 photos also show sparse previews and a per-picture read limit.
+Shield, CoreELEC FFmpeg Tools setup, reliable 4K coverage, CPU/RAM, playback
+smoothness and HDR thumbnail colour still need device tests.
 The Android helper initially supports H.264/HEVC in MKV/MP4 and has no HDR tone
 mapping. Missing decoders, unsupported media or failed extraction retain the
 normal seek timeline. The investigation below records the earlier design work;
@@ -91,15 +93,21 @@ the current sound selection and volume. Sound assets are not copied into our ZIP
   plan and cancel obsolete reads; cached nearby frames stay immediately available
   in a small dialog memory catalogue. Polling is 50 ms in the worker and 100 ms
   in the existing painter; there is no thumbnail wait on remote callbacks.
-- Ten-second buckets match tap seeks. The current target, next steps and previous
-  step take priority over a 15-point coarse pass across the film. One decoder
-  process runs at a time with one decode/filter thread. There is no second player.
+- Ten-second buckets match tap seeks. From 1.8.282, foreground work requests the
+  selected position and one neighbouring step in the direction of travel.
+  Background work only requests the current playback bucket, with at most
+  16 MiB of the 64 MiB session allowance; there is no distant whole-film scan.
+  One decoder runs at a time with one decode/filter thread. There is no second player.
 - `core/seek_preview.py` seeks FFmpeg directly to a keyframe and produces a maximum
   384×216 JPEG. A loopback adapter permits two overlapping range connections from
   that decoder to avoid blocking a seek behind the previous connection. It shares
   an 8 MiB read cache, serialises upstream reads, and uses the existing reader's
   authentication, redirect stripping and range/validator checks. Raw source URLs
   never enter decoder arguments, published properties, cache names or logs.
+  Since 1.8.282, a 32 KiB loopback send buffer limits speculative read-ahead while
+  the decoder is parsing a header or seeking. An isolated Linux slow-consumer
+  test reduced fetched data from 2.5 MiB to 0.5 MiB. Actual buffering varies by OS;
+  the frame and session ceilings are unchanged and now have distinct messages.
 - Read budgets are 8 MiB/five seconds per picture and 64 MiB per playback session.
   Since 1.8.281, reads use 512 KiB blocks instead of 128 KiB to amortise HTTP
   request latency; the 8 MiB cache and other limits are unchanged. A synthetic
@@ -115,8 +123,12 @@ the current sound selection and volume. Sound assets are not copied into our ZIP
   duration or playback session invalidates mailbox ownership. Signed URL changes
   intentionally miss the disk cache. Off stops work and keeps existing cached files.
 
-The three-image strip uses **≈** timestamps because keyframes may precede the
-selected bucket. The central seek label remains the actual requested destination.
+The single fixed preview introduced in 1.8.282 uses **≈** timestamps because
+keyframes may precede the selected bucket. Only cached images within ten seconds
+of the selection are displayed; otherwise the same box shows a placeholder and
+the selected time while the worker catches up. A picture never changes slots.
+The main seek label remains the actual requested destination. Cold 4K positions
+may still take seconds to generate or exceed the per-frame limit.
 No alternate film copy is selected. HLS/DASH, live TV, inputstream/DRM playback,
 network filesystem schemes and servers without valid byte ranges are excluded.
 HDR/Dolby Vision thumbnail colours are not tone-mapped or certified. Large-frame

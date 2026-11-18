@@ -1,3 +1,9 @@
+1.8.282
+- Keep a single preview box in a fixed position, with a placeholder while loading. Stop sparse cached pictures jumping between left, centre and right slots.
+- Show cached frames only within one ten-second step of the selected position, with the actual frame timestamp.
+- Prioritise the selected position and one neighbouring step; remove distant background scans and reserve most of the data allowance for scrubbing.
+- Limit loopback read-ahead and distinguish the playback allowance from the per-picture limit. Player remains 0.1.54 and Android decoders remain 0.1.0.
+
 1.8.281
 - Reduce preview request overhead on streamed 4K files by fetching 512 KiB blocks instead of 128 KiB, within the same cache, byte and time limits.
 - Show specific preview timeout, network, byte-range, container and read-limit messages without exposing stream addresses.
