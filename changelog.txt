@@ -1,3 +1,8 @@
+1.8.284
+- Fix premature preview socket timeouts: preview reads use the remaining five-second frame deadline, and Android decoder 0.1.1 no longer gives up after one second waiting for the local proxy.
+- Retry a focused timeout once when it cached new source blocks. Preserve per-attempt byte/time caps, rate accounting and cancellation when the target changes.
+- Update both freeBird and the matching preview decoder to 0.1.1, then restart Kodi. Player remains 0.1.54. Cold requests can take up to two bounded attempts; cached pictures stay immediate.
+
 1.8.283
 - Request the selected second without ten-second rounding; show the same selected time on the preview and seek bar, with the actual keyframe time when different. Never substitute a future frame.
 - Wait for 300 ms of stable selection before decoding, and stop speculative neighbouring requests. Cached pictures remain immediate.

@@ -8,9 +8,9 @@
 
 freeBird is daanvb’s independent Kodi addon: a cinematic browsing interface, clearer source selection and configurable playback, using your Stremio account and installed addons. Kodi handles video playback; freeBird supplies its own browsing interface and an optional companion player skin.
 
-**Latest release: freeBird 1.8.283 · Player 0.1.54 · Repository 1.0.6.** [Install and update](https://daanvb.github.io/freeBird-repository/) · [Full changelog](changelog.txt)
+**Latest release: freeBird 1.8.284 · Player 0.1.54 · Repository 1.0.6.** [Install and update](https://daanvb.github.io/freeBird-repository/) · [Full changelog](changelog.txt)
 
-**Try seek previews:** 1.8.283 requests the selected second, keeps its preview time aligned with the seek bar, and shows the actual frame time when different. It waits briefly for scrub input to settle and automatically recovers from preview read cooldowns. Leave previews enabled if the decoder already works. Pause a direct MKV/MP4 movie or episode, open the seek bar and move Left/Right; stop on a position to generate a picture, then revisit it to compare cached speed. Android Kodi 21/22 uses its matching decoder; CoreELEC/LibreELEC uses FFmpeg Tools. Previews remain experimental: individual 4K requests can still time out or exceed the per-picture limit. Player 0.1.54 and native decoders 0.1.0 are unchanged.
+**Try seek previews:** update **freeBird to 1.8.284** and the installed **freeBird preview decoder to 0.1.1**, then restart Kodi. This fixes premature one-second native and two-second upstream preview timeouts. A focused timeout that cached new data gets one bounded retry; the five-second and 8 MiB limits still apply to each attempt. Leave previews enabled, pause a direct MKV/MP4 movie or episode, and select a seek position. Cached pictures remain immediate; a slow cold position may take two attempts. Player remains 0.1.54. CoreELEC/LibreELEC retains its FFmpeg Tools route. Real-device speed and HDR colours still need testing.
 
 **Repository cleanup:** obsolete Strem4Kodi app/player entries and installer downloads have been removed. Current freeBird packages and the previous app/player versions are retained unchanged. Release 1.8.242 uses ordinary freeBird setup without the legacy migration wizard. Existing profile data is retained.
 

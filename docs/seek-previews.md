@@ -1,6 +1,7 @@
 # Experimental seek preview images
 
-Update to freeBird **1.8.283** (Player remains **0.1.54**), then enable
+Update to freeBird **1.8.284** (Player remains **0.1.54**) and, on Android,
+the matching **freeBird preview decoder 0.1.1**, then restart Kodi and enable
 **Playback → Seek preview images (experimental)** in freeBird settings.
 It is off by default and stays local to the device. **Press OK to seek** makes
 testing easier: Left/Right selects a position, OK commits it, and Back cancels.
@@ -20,6 +21,13 @@ platform variants as unavailable during the app update. The matching installed
 decoder is checked for enabled state; turning previews on enables it if disabled
 and shows a confirmation. If already enabled, a confirmation still appears.
 The player picks up a completed installation on its next local discovery retry.
+
+Version 0.1.1 fixes a one-second native loopback timeout that could expire while
+Python was still waiting for the stream. In Kodi's addon updates, update both
+freeBird and its installed preview decoder; an app-only update leaves the old
+native timeout in place. Restart Kodi after the decoder update so it loads the
+new library. The app still works with the older decoder, but that timeout fix
+requires 0.1.1.
 
 **CoreELEC/LibreELEC and desktop** use an executable FFmpeg with HTTP,
 Matroska/MP4, the source's video codec, scaling and JPEG encoding. Discovery checks
@@ -115,6 +123,15 @@ the current sound selection and volume. Sound assets are not copied into our ZIP
   a complete picture, new decoding cools down and resumes automatically as
   charges expire; cached pictures remain available. Cumulative accounting
   stays intact, and playback does not need to restart.
+  Version 1.8.284 lets preview sockets use the remaining frame deadline instead
+  of the chapter reader's two-second socket limit; chapter reads retain their
+  previous limit. Native decoder 0.1.1 likewise uses the five-second job deadline
+  rather than failing after one second waiting for the loopback proxy. A focused
+  timeout that cached new blocks gets at most one automatic retry after 150 ms.
+  Both attempts remain individually bounded and count toward the rolling rate
+  limit; changing target or closing the scrubber cancels the pending retry.
+  No cached progress means no automatic retry. A slow cold position can therefore
+  take roughly ten seconds across both attempts, while cached JPEGs remain immediate.
   Since 1.8.281, reads use 512 KiB blocks instead of 128 KiB to amortise HTTP
   request latency; the 8 MiB cache and other limits are unchanged. A synthetic
   streamed 4K/10-bit HEVC MKV with 300 ms latency per range request exceeded the
