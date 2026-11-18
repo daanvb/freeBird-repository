@@ -1,3 +1,9 @@
+1.8.280
+- Enable an installed but disabled Android preview decoder when turning seek previews on; confirm its state in freeBird Playback settings.
+- Request only the matching platform decoder on demand, removing unavailable variants from the app installation dependencies.
+- Show a short status above the seek bar when previews are missing, loading, waiting or unable to generate a picture.
+- Player remains 0.1.54. Turn previews off and on once after updating; Fire TV device validation is still required.
+
 1.8.279
 - Add optional cached preview images to the player seek bar. Enable Seek preview images (experimental) in freeBird Playback settings.
 - Ask Kodi to install the matching native preview decoder on Android Kodi 21/22, or FFmpeg Tools on CoreELEC/LibreELEC.

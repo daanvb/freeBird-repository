@@ -8,9 +8,9 @@
 
 freeBird is daanvb’s independent Kodi addon: a cinematic browsing interface, clearer source selection and configurable playback, using your Stremio account and installed addons. Kodi handles video playback; freeBird supplies its own browsing interface and an optional companion player skin.
 
-**Latest release: freeBird 1.8.279 · Player 0.1.54 · Repository 1.0.6.** [Install and update](https://daanvb.github.io/freeBird-repository/) · [Full changelog](changelog.txt)
+**Latest release: freeBird 1.8.280 · Player 0.1.54 · Repository 1.0.6.** [Install and update](https://daanvb.github.io/freeBird-repository/) · [Full changelog](changelog.txt)
 
-**Try seek previews:** in freeBird settings, enable **Playback → Seek preview images (experimental)** and accept Kodi's decoder installation prompt. Android Kodi 21/22 installs the matching freeBird helper; CoreELEC/LibreELEC requests FFmpeg Tools. Pause a direct MKV/MP4 movie or episode briefly, open the seek bar and move Left/Right. Previews are off by default; device performance and HDR colours are still being tested. The AppleTv GUI sound resource is included as a dependency; your selected sound pack stays unchanged.
+**Try seek previews:** after updating to 1.8.280, turn **Playback → Seek preview images (experimental)** off and on in freeBird settings. Android Kodi 21/22 requests only its matching decoder and enables it if already installed but disabled. CoreELEC/LibreELEC requests FFmpeg Tools. Pause a direct MKV/MP4 movie or episode briefly, open the seek bar and move Left/Right. If no pictures appear, report the short message above the seek bar. Previews are off by default; Fire TV device performance and HDR colours still need testing. The AppleTv GUI sound resource remains a dependency; your selected sound pack stays unchanged.
 
 **Repository cleanup:** obsolete Strem4Kodi app/player entries and installer downloads have been removed. Current freeBird packages and the previous app/player versions are retained unchanged. Release 1.8.242 uses ordinary freeBird setup without the legacy migration wizard. Existing profile data is retained.
 

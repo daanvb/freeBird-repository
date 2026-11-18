@@ -25,6 +25,10 @@ unchanged.
 - `addons.xml` and `addons.xml.sha256`: Kodi's update index and checksum.
 - `script.freebird/`: current app and declared artwork.
 - `skin.freebird/`: current player skin and artwork.
+- `vfs.freebird.preview.<omega|piers>.<armv7|aarch64>/`: optional Android native
+  seek-preview packages selected by Kodi version and process architecture.
+- `native-preview-sources/`: matching helper/FFmpeg/Kodi SDK source archives,
+  build instructions, licenses and checksums for the native decoder release.
 - `repository.freebird/`: current repository installer and artwork.
 - Legacy package directories are retired; use Git history for historical recovery.
 - `repository.freebird.zip` is the sole root installer download.
@@ -38,5 +42,15 @@ unchanged.
 Keep current plus previous versions in each package directory. Retain any additional skin version required by the retained app packages. Remove duplicate root app/skin ZIPs and obsolete packages only after download links and the feed have been checked. Do not rewrite Git history. Historical downloads are recoverable by browsing the repository at an older commit or restoring the corresponding tracked file from that commit.
 
 The cleanup does not touch pre-roll assets, private device-sync data, account credentials or source branches. Git history still consumes storage; this retention policy reduces the deployed Pages site and visible clutter, not historical repository size.
+
+When adding/updating native preview packages, pass all four validated ZIPs to
+`tools/build-kodi-repository.py --extra-package` and stage their matching source
+archives with `tools/build-native-preview-sources.py`. Later app-only builds
+preserve native entries from the staged feed even though 1.8.280 requests them
+on demand instead of declaring cross-platform app imports. Release verification
+requires all four native packages. Keep already published repository installer
+ZIPs immutable; text line-ending differences in a Windows checkout are not a
+repository version change. Never include build caches or private repository
+history in the matching-source archives.
 
 The freeBird rename retired the old GitHub Pages address. Existing repository 1.0.4 installers point to that address and cannot discover an update there; install repository 1.0.6 once from `https://daanvb.github.io/freeBird-repository/`. Old installer aliases have been retired. Reinstalling over retained addon data does not reset it.
