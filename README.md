@@ -8,9 +8,9 @@
 
 freeBird is daanvb’s independent Kodi addon: a cinematic browsing interface, clearer source selection and configurable playback, using your Stremio account and installed addons. Kodi handles video playback; freeBird supplies its own browsing interface and an optional companion player skin.
 
-**Latest release: freeBird 1.8.280 · Player 0.1.54 · Repository 1.0.6.** [Install and update](https://daanvb.github.io/freeBird-repository/) · [Full changelog](changelog.txt)
+**Latest release: freeBird 1.8.281 · Player 0.1.54 · Repository 1.0.6.** [Install and update](https://daanvb.github.io/freeBird-repository/) · [Full changelog](changelog.txt)
 
-**Try seek previews:** after updating to 1.8.280, turn **Playback → Seek preview images (experimental)** off and on in freeBird settings. Android Kodi 21/22 requests only its matching decoder and enables it if already installed but disabled. CoreELEC/LibreELEC requests FFmpeg Tools. Pause a direct MKV/MP4 movie or episode briefly, open the seek bar and move Left/Right. If no pictures appear, report the short message above the seek bar. Previews are off by default; Fire TV device performance and HDR colours still need testing. The AppleTv GUI sound resource remains a dependency; your selected sound pack stays unchanged.
+**Try seek previews:** 1.8.281 reduces request overhead on streamed 4K files and reports specific timeout/read failures. Enable **Playback → Seek preview images (experimental)** in freeBird settings; if the decoder was already enabled successfully on 1.8.280, leave it enabled. Android Kodi 21/22 requests only its matching decoder; CoreELEC/LibreELEC requests FFmpeg Tools. Pause a direct MKV/MP4 movie or episode briefly, open the seek bar and move Left/Right. If no pictures appear, report the message above the seek bar. Previews are off by default; Fire TV performance and HDR colours still need testing. The AppleTv GUI sound resource remains a dependency; your selected sound pack stays unchanged.
 
 **Repository cleanup:** obsolete Strem4Kodi app/player entries and installer downloads have been removed. Current freeBird packages and the previous app/player versions are retained unchanged. Release 1.8.242 uses ordinary freeBird setup without the legacy migration wizard. Existing profile data is retained.
 

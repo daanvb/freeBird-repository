@@ -1,3 +1,8 @@
+1.8.281
+- Reduce preview request overhead on streamed 4K files by fetching 512 KiB blocks instead of 128 KiB, within the same cache, byte and time limits.
+- Show specific preview timeout, network, byte-range, container and read-limit messages without exposing stream addresses.
+- Retain decoder activation from 1.8.280. Player stays 0.1.54 and Android decoders stay 0.1.0; Fire TV playback testing is still required.
+
 1.8.280
 - Enable an installed but disabled Android preview decoder when turning seek previews on; confirm its state in freeBird Playback settings.
 - Request only the matching platform decoder on demand, removing unavailable variants from the app installation dependencies.

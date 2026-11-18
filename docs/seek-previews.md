@@ -1,6 +1,6 @@
 # Experimental seek preview images
 
-Update to freeBird **1.8.280** (Player remains **0.1.54**), then enable
+Update to freeBird **1.8.281** (Player remains **0.1.54**), then enable
 **Playback → Seek preview images (experimental)** in freeBird settings.
 It is off by default and stays local to the device. **Press OK to seek** makes
 testing easier: Left/Right selects a position, OK commits it, and Back cancels.
@@ -48,7 +48,8 @@ the integrated 1.8.279 path supersedes its prototype-only descriptions.
 
 ## Quick device test
 
-1. On 1.8.280, turn previews off and on in freeBird Playback settings. Let Kodi
+1. If not already enabled successfully on 1.8.280, turn previews off and on in
+   freeBird Playback settings. Let Kodi
    install or enable the decoder. On CoreELEC keep its
    device repository enabled; on Android keep the freeBird repository enabled.
 2. Start a direct MKV/MP4 movie or episode. Pause for a few seconds, open the seek
@@ -63,7 +64,9 @@ the integrated 1.8.279 path supersedes its prototype-only descriptions.
 
 When no images are available, the seek bar now shows a fixed status message for
 missing/disabled decoders, loading failure, waiting for playback, frame failure
-or the per-playback read limit. No media address or raw exception is displayed.
+or the per-playback read limit. Version 1.8.281 additionally distinguishes
+timeouts, failed stream reads, inconsistent byte ranges, unsupported containers
+and per-picture byte limits. No media address or raw exception is displayed.
 An isolated Linux Kodi 20.5 runtime reproduced `System.HasAddon=true` with
 `enabled=false` and a failing VFS open. The production settings function enabled
 that addon through Kodi JSON-RPC, after which the production Python/VFS decoder
@@ -98,6 +101,12 @@ the current sound selection and volume. Sound assets are not copied into our ZIP
   authentication, redirect stripping and range/validator checks. Raw source URLs
   never enter decoder arguments, published properties, cache names or logs.
 - Read budgets are 8 MiB/five seconds per picture and 64 MiB per playback session.
+  Since 1.8.281, reads use 512 KiB blocks instead of 128 KiB to amortise HTTP
+  request latency; the 8 MiB cache and other limits are unchanged. A synthetic
+  streamed 4K/10-bit HEVC MKV with 300 ms latency per range request exceeded the
+  five-second deadline with 128 KiB blocks. With 512 KiB, cold frames at 0s/4s
+  completed in 2.13s/3.34s (7/11 requests) on the development host. This does not
+  establish Fire TV latency, HDR colour accuracy or the user's exact failure.
   Cancellation checks run during reads and every 40 ms while decoding; an active
   network request may take up to its two-second socket timeout to finish. Playback
   and UI threads never join it. Per-picture failures back off for 60 seconds.
