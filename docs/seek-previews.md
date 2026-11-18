@@ -1,6 +1,6 @@
 # Experimental seek preview images
 
-Update to freeBird **1.8.284** (Player remains **0.1.54**) and, on Android,
+Update to freeBird **1.8.285** (Player remains **0.1.54**) and, on Android,
 the matching **freeBird preview decoder 0.1.1**, then restart Kodi and enable
 **Playback → Seek preview images (experimental)** in freeBird settings.
 It is off by default and stays local to the device. **Press OK to seek** makes
@@ -77,6 +77,20 @@ missing/disabled decoders, loading failure, waiting for playback, frame failure
 or a temporary read cooldown. Version 1.8.281 additionally distinguishes
 timeouts, failed stream reads, inconsistent byte ranges, unsupported containers
 and per-picture byte limits. No media address or raw exception is displayed.
+Version 1.8.285 adds a timeout readout because the user still reports a timeout
+on Shield after installing decoder 0.1.1 and restarting Kodi. It shows whether
+the initial header was being opened, an upstream read was active, or the app
+was waiting for a frame with no upstream read active. It also shows total and
+upstream-read time, actual bytes received (including partial responses), range
+request/cache-hit counts, and attempt number. These are per-attempt values,
+captured before cancellation and cleanup. **Waiting for frame is not proof of
+CPU-bound decoding**: it also includes native parsing, seeking and scheduling.
+Cached reads count separately and do not inflate received network bytes.
+The bounded, fixed fields live only in the playback status mailbox and timeout
+label; there is no new disk log, diagnostic upload or private-source capture.
+Send a photo of the expanded message after reproducing the failure. This release
+does not change deadlines, byte limits, retries or decoder binaries, and does
+not claim to resolve the remaining real-device timeout.
 An isolated Linux Kodi 20.5 runtime reproduced `System.HasAddon=true` with
 `enabled=false` and a failing VFS open. The production settings function enabled
 that addon through Kodi JSON-RPC, after which the production Python/VFS decoder

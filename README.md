@@ -8,9 +8,9 @@
 
 freeBird is daanvb’s independent Kodi addon: a cinematic browsing interface, clearer source selection and configurable playback, using your Stremio account and installed addons. Kodi handles video playback; freeBird supplies its own browsing interface and an optional companion player skin.
 
-**Latest release: freeBird 1.8.284 · Player 0.1.54 · Repository 1.0.6.** [Install and update](https://daanvb.github.io/freeBird-repository/) · [Full changelog](changelog.txt)
+**Latest release: freeBird 1.8.285 · Player 0.1.54 · Repository 1.0.6.** [Install and update](https://daanvb.github.io/freeBird-repository/) · [Full changelog](changelog.txt)
 
-**Try seek previews:** update **freeBird to 1.8.284** and the installed **freeBird preview decoder to 0.1.1**, then restart Kodi. This fixes premature one-second native and two-second upstream preview timeouts. A focused timeout that cached new data gets one bounded retry; the five-second and 8 MiB limits still apply to each attempt. Leave previews enabled, pause a direct MKV/MP4 movie or episode, and select a seek position. Cached pictures remain immediate; a slow cold position may take two attempts. Player remains 0.1.54. CoreELEC/LibreELEC retains its FFmpeg Tools route. Real-device speed and HDR colours still need testing.
+**Try seek previews:** freeBird 1.8.285 adds a compact timeout readout for remaining device failures: stream/frame wait, total/read time, received data, range/cache counts and attempt number. Decoder stays 0.1.1 and Player stays 0.1.54. Update the app and restart Kodi; if it times out, photograph the expanded message above the seek bar. This is diagnostic evidence, not a claimed fix or a limit increase. No stream addresses, account details or new uploads are included. Keep the matching Android decoder on 0.1.1; CoreELEC/LibreELEC retains FFmpeg Tools.
 
 **Repository cleanup:** obsolete Strem4Kodi app/player entries and installer downloads have been removed. Current freeBird packages and the previous app/player versions are retained unchanged. Release 1.8.242 uses ordinary freeBird setup without the legacy migration wizard. Existing profile data is retained.
 

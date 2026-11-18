@@ -1,3 +1,8 @@
+1.8.285
+- Add a compact preview timeout readout: opening/reading the stream versus waiting for a frame, elapsed/read time, actual received bytes, range requests, cache hits and attempt number.
+- Capture evidence before cancellation clears active reads, count partial responses, and validate fixed fields before displaying them. No stream URLs, account details, logs or uploads are added.
+- This is a diagnostic follow-up for continued Shield timeouts, not a claimed performance fix. Decoder remains 0.1.1, Player remains 0.1.54, and all existing limits/retry behaviour remain.
+
 1.8.284
 - Fix premature preview socket timeouts: preview reads use the remaining five-second frame deadline, and Android decoder 0.1.1 no longer gives up after one second waiting for the local proxy.
 - Retry a focused timeout once when it cached new source blocks. Preserve per-attempt byte/time caps, rate accounting and cancellation when the target changes.
