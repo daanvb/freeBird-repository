@@ -1,3 +1,10 @@
+1.8.279
+- Add optional cached preview images to the player seek bar. Enable Seek preview images (experimental) in freeBird Playback settings.
+- Ask Kodi to install the matching native preview decoder on Android Kodi 21/22, or FFmpeg Tools on CoreELEC/LibreELEC.
+- Keep seeking responsive with bounded background reads, latest-target priority and cancellation; retain actual native frame timestamps in the cache.
+- Install the AppleTv GUI sound resource as a dependency without changing your selected sounds.
+- Previews remain off by default. Device loading, 4K performance and HDR thumbnail colours need testing; Player stays 0.1.54.
+
 1.8.278
 - Stop Home rows and the drawer footer wrapping back to the beginning.
 - Retain Kodi 21 support while adapting language tags, native seek actions and Live TV DRM for Kodi 22.

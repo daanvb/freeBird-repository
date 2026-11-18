@@ -1,8 +1,14 @@
 <?xml version='1.0' encoding='utf-8'?>
-<addons><addon id="script.freebird" name="freeBird" version="1.8.278" provider-name="daanvb">
+<addons><addon id="script.freebird" name="freeBird" version="1.8.279" provider-name="daanvb">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
     <import addon="skin.freebird" version="0.1.54" />
+    <import addon="resource.uisounds.appletv" version="0.0.2" />
+    <import addon="tools.ffmpeg-tools" version="1.0" optional="true" />
+    <import addon="vfs.freebird.preview.omega.armv7" version="0.1.0" optional="true" />
+    <import addon="vfs.freebird.preview.omega.aarch64" version="0.1.0" optional="true" />
+    <import addon="vfs.freebird.preview.piers.armv7" version="0.1.0" optional="true" />
+    <import addon="vfs.freebird.preview.piers.aarch64" version="0.1.0" optional="true" />
     <import addon="script.module.qrcode" version="6.1.0+matrix.3" optional="true" />
     <import addon="script.module.inputstreamhelper" version="0.6.1" />
     <import addon="inputstream.adaptive" version="2.4.0" />
@@ -23,7 +29,7 @@
     <license>GPL-2.0-or-later</license>
     <website>https://daanvb.github.io/freeBird-repository/</website>
     <source>https://github.com/daanvb/freeBird-repository</source>
-    <news>1.8.278 stops Home navigation wrapping and adds Kodi 22 playback compatibility while retaining Kodi 21 support.</news>
+    <news>1.8.279 adds opt-in seek preview images, Android native decoder installation, CoreELEC FFmpeg Tools setup and the AppleTv GUI sound dependency.</news>
     <assets>
       <icon>resources/branding/freebird-icon-v1.png</icon>
       <fanart>resources/branding/freebird-fanart-v1.png</fanart>
@@ -84,5 +90,57 @@
       <icon>resources/freebird-icon-v1.png</icon>
       <fanart>resources/freebird-fanart-v1.png</fanart>
     </assets>
+  </extension>
+</addon><addon id="vfs.freebird.preview.omega.armv7" version="0.1.0" name="freeBird preview decoder (omega armv7)" provider-name="freeBird">
+  <requires>
+    <import addon="kodi.binary.global.main" version="2.0.2" minversion="2.0.0" />
+    <import addon="kodi.binary.instance.vfs" version="3.0.1" minversion="3.0.1" />
+  </requires>
+  <extension point="kodi.vfs" protocols="freebirdpreviewomegaarmv7" files="true" library_android="libvfs.freebird.preview.so" />
+  <extension point="xbmc.addon.metadata">
+    <platform>android-armv7</platform>
+    <license>GPL-2.0-or-later</license>
+    <summary lang="en_GB">Optional seek preview decoder for freeBird.</summary>
+    <description lang="en_GB">Generates preview images when enabled in freeBird Playback settings. Experimental; device testing is ongoing.</description>
+    <source>https://daanvb.github.io/freeBird-repository/native-preview-sources/</source>
+  </extension>
+</addon><addon id="vfs.freebird.preview.omega.aarch64" version="0.1.0" name="freeBird preview decoder (omega aarch64)" provider-name="freeBird">
+  <requires>
+    <import addon="kodi.binary.global.main" version="2.0.2" minversion="2.0.0" />
+    <import addon="kodi.binary.instance.vfs" version="3.0.1" minversion="3.0.1" />
+  </requires>
+  <extension point="kodi.vfs" protocols="freebirdpreviewomegaaarch64" files="true" library_android="libvfs.freebird.preview.so" />
+  <extension point="xbmc.addon.metadata">
+    <platform>android-aarch64</platform>
+    <license>GPL-2.0-or-later</license>
+    <summary lang="en_GB">Optional seek preview decoder for freeBird.</summary>
+    <description lang="en_GB">Generates preview images when enabled in freeBird Playback settings. Experimental; device testing is ongoing.</description>
+    <source>https://daanvb.github.io/freeBird-repository/native-preview-sources/</source>
+  </extension>
+</addon><addon id="vfs.freebird.preview.piers.armv7" version="0.1.0" name="freeBird preview decoder (piers armv7)" provider-name="freeBird">
+  <requires>
+    <import addon="kodi.binary.global.main" version="2.0.4" minversion="2.0.3" />
+    <import addon="kodi.binary.instance.vfs" version="3.0.1" minversion="3.0.1" />
+  </requires>
+  <extension point="kodi.vfs" protocols="freebirdpreviewpiersarmv7" files="true" library_android="libvfs.freebird.preview.so" />
+  <extension point="xbmc.addon.metadata">
+    <platform>android-armv7</platform>
+    <license>GPL-2.0-or-later</license>
+    <summary lang="en_GB">Optional seek preview decoder for freeBird.</summary>
+    <description lang="en_GB">Generates preview images when enabled in freeBird Playback settings. Experimental; device testing is ongoing.</description>
+    <source>https://daanvb.github.io/freeBird-repository/native-preview-sources/</source>
+  </extension>
+</addon><addon id="vfs.freebird.preview.piers.aarch64" version="0.1.0" name="freeBird preview decoder (piers aarch64)" provider-name="freeBird">
+  <requires>
+    <import addon="kodi.binary.global.main" version="2.0.4" minversion="2.0.3" />
+    <import addon="kodi.binary.instance.vfs" version="3.0.1" minversion="3.0.1" />
+  </requires>
+  <extension point="kodi.vfs" protocols="freebirdpreviewpiersaarch64" files="true" library_android="libvfs.freebird.preview.so" />
+  <extension point="xbmc.addon.metadata">
+    <platform>android-aarch64</platform>
+    <license>GPL-2.0-or-later</license>
+    <summary lang="en_GB">Optional seek preview decoder for freeBird.</summary>
+    <description lang="en_GB">Generates preview images when enabled in freeBird Playback settings. Experimental; device testing is ongoing.</description>
+    <source>https://daanvb.github.io/freeBird-repository/native-preview-sources/</source>
   </extension>
 </addon></addons>
