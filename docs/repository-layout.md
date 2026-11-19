@@ -54,3 +54,8 @@ repository version change. Never include build caches or private repository
 history in the matching-source archives.
 
 The freeBird rename retired the old GitHub Pages address. Existing repository 1.0.4 installers point to that address and cannot discover an update there; install repository 1.0.6 once from `https://daanvb.github.io/freeBird-repository/`. Old installer aliases have been retired. Reinstalling over retained addon data does not reset it.
+
+For a native-only release, retain the published app ZIP byte-for-byte. Run its
+source-agreement verification from the exact app release commit, then validate
+the new native packages and matching sources from the native release branch.
+Do not rebuild or overwrite an unchanged app version to refresh packaged docs.

@@ -1,12 +1,38 @@
 # Experimental seek preview images
 
 Update to freeBird **1.8.286** (Player remains **0.1.54**) and, on Android,
-the matching **freeBird preview decoder 0.1.1**, then restart Kodi and enable
+the matching **freeBird preview decoder 0.1.2**, then restart Kodi and enable
 **Playback → Seek preview images (experimental)** in freeBird settings.
 It is off by default and stays local to the device. **Press OK to seek** makes
 testing easier: Left/Right selects a position, OK commits it, and Back cancels.
 The existing release-to-seek mode still works; generating a picture never delays
 or changes the requested seek.
+
+Decoder **0.1.2** fixes two reproduced failures. First, a decoded keyframe could
+remain buffered while the helper continued reading later GOPs; it now drains
+that one picture using [FFmpeg's draining API](https://ffmpeg.org/doxygen/trunk/group__lavc__encdec.html).
+Second, the bundled Matroska seeker scanned the remaining clusters when selecting
+its last indexed cue. An opt-in `AVFMT_FLAG_FAST_SEEK` patch permits the known
+preceding keyframe directly for backward preview seeks. Missing entries, broken
+cues and ordinary seeks retain their existing fallback. The helper enables this
+only for Matroska, inside its private FFmpeg build; Kodi's main-player FFmpeg and
+CoreELEC's executable backend are unchanged.
+
+The expanded long-GOP/B-frame regression now passes for MKV and MP4, including a
+cold request after the final indexed keyframe, cache-warmed repeats and exact
+preceding timestamps. With 150 ms range latency, a cold MKV 22s request returned
+the 20s frame in 0.516s using about 1.2 MB. Ten isolated Linux Kodi 20.5 requests
+at varied positions, including repeated end seeks, all returned correct frames
+in 0.114-0.178s. These are host results, not measured Shield performance. The
+previous local failure gate is resolved; the earlier one-off 12s miss was not
+reproduced in those runs, so it is not independently attributed to this fix.
+
+**Update only the installed preview decoder to 0.1.2, then restart Kodi.**
+The app stays on 1.8.286 and Player on 0.1.54. The five-second/8 MiB picture limits,
+rolling read allowance, cancellation and retry policy all remain. The original
+FFmpeg source archive plus the exact patch and build scripts are distributed
+with the matching sources. Patch-specific build caches and a CMake fingerprint
+check prevent accidental reuse of an unpatched FFmpeg build.
 
 ## Decoder availability
 

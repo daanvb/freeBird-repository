@@ -10,7 +10,7 @@ freeBird is daanvb’s independent Kodi addon: a cinematic browsing interface, c
 
 **Latest release: freeBird 1.8.286 · Player 0.1.54 · Repository 1.0.6.** [Install and update](https://daanvb.github.io/freeBird-repository/) · [Full changelog](changelog.txt)
 
-**Try seek previews:** freeBird 1.8.286 reduces repeated Kodi GUI checks while generating previews. Isolated Kodi testing shows less overhead; Shield timeout recovery still needs device testing. Update the app, restart Kodi and retry the same source and positions. Keep the installed Android decoder on 0.1.1 and Player on 0.1.54. Existing time/data limits and the timeout readout remain. CoreELEC/LibreELEC retains FFmpeg Tools.
+**Seek preview decoder 0.1.2:** update the installed preview decoder and restart Kodi. Keep the app on 1.8.286 and Player on 0.1.54. This fixes reproduced buffered-frame and final-index Matroska seek failures within the existing limits. The native regression and ten isolated Kodi seek checks pass; actual Shield recovery still needs device confirmation. CoreELEC keeps its existing executable backend.
 
 **Repository cleanup:** obsolete Strem4Kodi app/player entries and installer downloads have been removed. Current freeBird packages and the previous app/player versions are retained unchanged. Release 1.8.242 uses ordinary freeBird setup without the legacy migration wizard. Existing profile data is retained.
 

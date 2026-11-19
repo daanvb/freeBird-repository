@@ -1,3 +1,9 @@
+Native preview decoder 0.1.2 (app remains 1.8.286)
+- Drain a decoded keyframe instead of reading through later GOPs to fill the frame-reordering buffer. A long-GOP/B-frame 1080p regression reproduces the old timeout.
+- Preserve actual frame timestamps, cancellation and existing time/data limits. Build all four Android Kodi 21/22 variants; CoreELEC's executable backend is unchanged.
+- Fix the reproduced later-position MKV failure with a preview-only FFmpeg fast backward seek patch: use the final known cue without scanning the remaining clusters. Ordinary seeks and missing/broken cues retain their existing path.
+- Update only the installed preview decoder and restart Kodi. The local failure gate and Kodi playback probes pass; real Shield recovery remains unverified.
+
 1.8.286
 - Reduce repeated Kodi GUI/player checks during preview decoding and cached range reads by sharing their result for 100 ms across worker threads.
 - Keep playback retirement immediate, recheck target/buffering changes, and preserve the existing five-second, byte and retry limits.

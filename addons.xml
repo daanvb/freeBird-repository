@@ -86,7 +86,7 @@
       <fanart>resources/freebird-fanart-v1.png</fanart>
     </assets>
   </extension>
-</addon><addon id="vfs.freebird.preview.omega.aarch64" version="0.1.1" name="freeBird preview decoder (omega aarch64)" provider-name="freeBird">
+</addon><addon id="vfs.freebird.preview.omega.aarch64" version="0.1.2" name="freeBird preview decoder (omega aarch64)" provider-name="freeBird">
   <requires>
     <import addon="kodi.binary.global.main" version="2.0.2" minversion="2.0.0" />
     <import addon="kodi.binary.instance.vfs" version="3.0.1" minversion="3.0.1" />
@@ -99,7 +99,7 @@
     <description lang="en_GB">Generates preview images when enabled in freeBird Playback settings. Experimental; device testing is ongoing.</description>
     <source>https://daanvb.github.io/freeBird-repository/native-preview-sources/</source>
   </extension>
-</addon><addon id="vfs.freebird.preview.omega.armv7" version="0.1.1" name="freeBird preview decoder (omega armv7)" provider-name="freeBird">
+</addon><addon id="vfs.freebird.preview.omega.armv7" version="0.1.2" name="freeBird preview decoder (omega armv7)" provider-name="freeBird">
   <requires>
     <import addon="kodi.binary.global.main" version="2.0.2" minversion="2.0.0" />
     <import addon="kodi.binary.instance.vfs" version="3.0.1" minversion="3.0.1" />
@@ -112,7 +112,7 @@
     <description lang="en_GB">Generates preview images when enabled in freeBird Playback settings. Experimental; device testing is ongoing.</description>
     <source>https://daanvb.github.io/freeBird-repository/native-preview-sources/</source>
   </extension>
-</addon><addon id="vfs.freebird.preview.piers.aarch64" version="0.1.1" name="freeBird preview decoder (piers aarch64)" provider-name="freeBird">
+</addon><addon id="vfs.freebird.preview.piers.aarch64" version="0.1.2" name="freeBird preview decoder (piers aarch64)" provider-name="freeBird">
   <requires>
     <import addon="kodi.binary.global.main" version="2.0.4" minversion="2.0.3" />
     <import addon="kodi.binary.instance.vfs" version="3.0.1" minversion="3.0.1" />
@@ -125,7 +125,7 @@
     <description lang="en_GB">Generates preview images when enabled in freeBird Playback settings. Experimental; device testing is ongoing.</description>
     <source>https://daanvb.github.io/freeBird-repository/native-preview-sources/</source>
   </extension>
-</addon><addon id="vfs.freebird.preview.piers.armv7" version="0.1.1" name="freeBird preview decoder (piers armv7)" provider-name="freeBird">
+</addon><addon id="vfs.freebird.preview.piers.armv7" version="0.1.2" name="freeBird preview decoder (piers armv7)" provider-name="freeBird">
   <requires>
     <import addon="kodi.binary.global.main" version="2.0.4" minversion="2.0.3" />
     <import addon="kodi.binary.instance.vfs" version="3.0.1" minversion="3.0.1" />
