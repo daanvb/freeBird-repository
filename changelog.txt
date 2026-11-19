@@ -1,3 +1,15 @@
+1.8.288
+- Fix a reproduced CoreELEC 4K seek-preview timeout: copy one compressed keyframe and drain the bounded local clip instead of reading later GOPs to fill the decoder reorder buffer.
+- Preserve the shared five-second deadline, byte/rate limits and cancellation. Verify the actual frame timestamp before remuxing; reject future, negative and stale frames.
+- Clean up temporary clips, including abandoned clips after a crash. Android decoder 0.2.0 and Player 0.1.54 remain unchanged.
+- Synthetic executable and regression checks pass; actual Ugoos recovery and Dolby Vision colours remain device checks. Some early edited-HEVC positions still safely return no preview.
+
+1.8.287 / native preview decoder 0.2.0
+- Prepare a seek index once after five seconds of sustained safe playback headroom, without decoding speculative pictures. Foreground input, buffering and source changes cancel the work.
+- Reuse the playback-owned index across later previews and idle periods. Retire old sources, reject stale leases and preserve download budgets across decoder recreation.
+- Keep five-second/8 MiB picture limits, a separate ten-second/8 MiB preparation limit, and the rolling 64 MiB/60-second allowance. Release large 4K decoder buffers after each picture.
+- Preserve compatibility with older apps and decoder packages; CoreELEC's executable backend and Player 0.1.54 remain unchanged. Actual Shield recovery, Android performance and HDR rendering need device confirmation.
+
 Native preview decoder 0.1.2 (app remains 1.8.286)
 - Drain a decoded keyframe instead of reading through later GOPs to fill the frame-reordering buffer. A long-GOP/B-frame 1080p regression reproduces the old timeout.
 - Preserve actual frame timestamps, cancellation and existing time/data limits. Build all four Android Kodi 21/22 variants; CoreELEC's executable backend is unchanged.
