@@ -1,3 +1,8 @@
+1.8.286
+- Reduce repeated Kodi GUI/player checks during preview decoding and cached range reads by sharing their result for 100 ms across worker threads.
+- Keep playback retirement immediate, recheck target/buffering changes, and preserve the existing five-second, byte and retry limits.
+- Isolated Kodi testing confirms less callback overhead; continued Shield timeouts still require device verification. Decoder remains 0.1.1 and Player remains 0.1.54.
+
 1.8.285
 - Add a compact preview timeout readout: opening/reading the stream versus waiting for a frame, elapsed/read time, actual received bytes, range requests, cache hits and attempt number.
 - Capture evidence before cancellation clears active reads, count partial responses, and validate fixed fields before displaying them. No stream URLs, account details, logs or uploads are added.

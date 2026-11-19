@@ -1,6 +1,6 @@
 # Experimental seek preview images
 
-Update to freeBird **1.8.285** (Player remains **0.1.54**) and, on Android,
+Update to freeBird **1.8.286** (Player remains **0.1.54**) and, on Android,
 the matching **freeBird preview decoder 0.1.1**, then restart Kodi and enable
 **Playback → Seek preview images (experimental)** in freeBird settings.
 It is off by default and stays local to the device. **Press OK to seek** makes
@@ -103,6 +103,20 @@ The app also requires `resource.uisounds.appletv` 0.0.2, the all-platform
 Kodi resolves it when installing/updating freeBird. Select **AppleTv UI Sounds**
 in Kodi's interface sound settings to use it; dependency installation preserves
 the current sound selection and volume. Sound assets are not copied into our ZIP.
+
+Version 1.8.286 shares cancellation/eligibility checks between the decoder poller
+and range-reader threads for 100 ms, instead of calling Kodi's GUI APIs for every
+poll and cached block. A retired playback still cancels immediately through its
+stop event; selection/buffering changes are rechecked after that short interval.
+Kodi's [condition check](https://github.com/xbmc/xbmc/blob/60b9c6b0f7fe7bbb932f7140b4662627f94d7400/xbmc/interfaces/legacy/ModuleXbmc.cpp)
+and [window property read](https://github.com/xbmc/xbmc/blob/60b9c6b0f7fe7bbb932f7140b4662627f94d7400/xbmc/interfaces/legacy/Window.cpp)
+acquire GUI locks. In isolated Linux Kodi 20.5, a synthetic 1080p H.264 preview
+using the real native VFS adapter and Kodi calls took 0.317/0.338s before versus
+0.126/0.119s with shared checks (19 checks reduced to one). These are host results,
+not measured Shield speeds. The latest Shield photos show 5.0s elapsed, 0.8s
+reading, 0.2 MB received, one range read and 20 cache hits; they do not establish
+which remaining stage stalled. This app-only change keeps decoder 0.1.1 and all
+read/decode limits unchanged. Retry the same source and target after updating.
 
 ## Pipeline and responsiveness
 
