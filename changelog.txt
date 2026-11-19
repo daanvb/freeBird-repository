@@ -1,3 +1,9 @@
+1.8.289
+- Feed downloaded bytes to CoreELEC preview decoding incrementally instead of waiting for a complete 512 KiB block. Reuse at most two bounded responses across overlapping seeks.
+- Keep partial cached prefixes, charge every requested range in full, and preserve the five-second deadline, memory/rate limits, validators and cancellation. Retry once when a timed-out request extends an existing prefix.
+- Wake promptly when FFmpeg finishes. Keep one decoder thread, existing image quality, Player 0.1.54 and Android decoder 0.2.0.
+- The user confirms 1.8.288 fixed the Ugoos timeout. This follow-up targets speed; individual slow origins and later-position scans can still take longer.
+
 1.8.288
 - Fix a reproduced CoreELEC 4K seek-preview timeout: copy one compressed keyframe and drain the bounded local clip instead of reading later GOPs to fill the decoder reorder buffer.
 - Preserve the shared five-second deadline, byte/rate limits and cancellation. Verify the actual frame timestamp before remuxing; reject future, negative and stale frames.
