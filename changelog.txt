@@ -1,3 +1,7 @@
+Native preview decoder 0.2.1 (app remains 1.8.289)
+- Reduce cached-read overhead on Android by reading the persistent session index in bounded 256 KiB chunks. Keep the five-second deadline, data limits, cancellation and existing preview quality.
+- A synthetic 1080p MP4 with slow local proxy scheduling times out twice on 0.2.0; 0.2.1 returns its first picture in 4.455s and its cached repeat in 0.012s. Actual Fire Stick recovery remains to be confirmed.
+
 1.8.289
 - Feed downloaded bytes to CoreELEC preview decoding incrementally instead of waiting for a complete 512 KiB block. Reuse at most two bounded responses across overlapping seeks.
 - Keep partial cached prefixes, charge every requested range in full, and preserve the five-second deadline, memory/rate limits, validators and cancellation. Retry once when a timed-out request extends an existing prefix.
